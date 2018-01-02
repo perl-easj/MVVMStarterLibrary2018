@@ -2,14 +2,14 @@
 
 namespace Model.Interfaces
 {
-    public interface IPersistableCatalog
+    public interface IPersistableCatalogAsync
     {
         /// <summary>
         /// Invoke a Load operation on the catalog,
         /// meaning that all existing items in the
         /// catalog are replaced with the loaded items.
         /// </summary>
-        void Load(bool suppressException = true);
+        Task LoadAsync(bool suppressException = true);
 
         /// <summary>
         /// Invoke a Save operation on the catalog,
@@ -18,6 +18,6 @@ namespace Model.Interfaces
         /// thereby replacing the items present in
         /// persistent storage.
         /// </summary>
-        void Save(bool suppressException = true);
+        Task SaveAsync(bool suppressException = true);
     }
 }

@@ -112,6 +112,7 @@
     <Compile Include="Implementation\CRUDCommandManager.cs" />
     <Compile Include="Implementation\DeleteCommandBase.cs" />
     <Compile Include="Implementation\RelayCommand.cs" />
+    <Compile Include="Implementation\RelayCommandAsync.cs" />
     <Compile Include="Implementation\UpdateCommandBase.cs" />
     <Compile Include="Interfaces\CRUDCommands.cs" />
     <Compile Include="Interfaces\ICommandManager.cs" />

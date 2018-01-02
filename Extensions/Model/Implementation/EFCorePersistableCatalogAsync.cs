@@ -16,13 +16,14 @@ namespace Extensions.Model.Implementation
     ///    supporting Load + CRUD operations
     /// 2) The InMemoryCollection implementation is used.
     /// </summary>
-    public abstract class EFCorePersistableCatalog<TDomainData, TViewData, TPersistableData> : PersistableCatalog<TDomainData, TViewData, TPersistableData>
+    public abstract class EFCorePersistableCatalogAsync<TDbContext, TDomainData, TViewData, TPersistableData> : PersistableCatalogAsync<TDomainData, TViewData, TPersistableData>
+        where TDbContext : DbContext, new()
         where TDomainData : class, IStorable
         where TPersistableData : class, IStorable
         where TViewData : IStorable
     {
-        protected EFCorePersistableCatalog(DbContext context)
-            : base(new InMemoryCollection<TDomainData>(), new ConfiguredEFCoreSource<TPersistableData>(context), new List<PersistencyOperations>
+        protected EFCorePersistableCatalogAsync()
+            : base(new InMemoryCollection<TDomainData>(), new ConfiguredEFCoreSource<TDbContext, TPersistableData>(), new List<PersistencyOperations>
             {
                 PersistencyOperations.Load,
                 PersistencyOperations.Create,

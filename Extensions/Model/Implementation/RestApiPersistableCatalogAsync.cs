@@ -15,12 +15,12 @@ namespace Extensions.Model.Implementation
     /// 2) The InMemoryCollection implementation is used.
     /// </summary>
     public abstract class
-        RestApiPersistableCatalog<TDomainData, TViewData, TPersistentData> : PersistableCatalog<TDomainData, TViewData, TPersistentData>
+        RestApiPersistableCatalogAsync<TDomainData, TViewData, TPersistentData> : PersistableCatalogAsync<TDomainData, TViewData, TPersistentData>
         where TDomainData : class, IStorable
         where TPersistentData : IStorable
         where TViewData : IStorable
     {
-        protected RestApiPersistableCatalog(string url, string apiID)
+        protected RestApiPersistableCatalogAsync(string url, string apiID)
             : base(new InMemoryCollection<TDomainData>(), new ConfiguredRestAPISource<TPersistentData>(url, apiID),
                 new List<PersistencyOperations>
                 {

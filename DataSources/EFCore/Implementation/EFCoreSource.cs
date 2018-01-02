@@ -6,56 +6,68 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataSources.EFCore.Implementation
 {
-    public class EFCoreSource<TPersistentData> : IDataSourceCRUD<TPersistentData>, IDataSourceLoad<TPersistentData>
-        where TPersistentData : class, IStorable
+    /// <summary>
+    /// Implementation of IDataSource... interfaces, using 
+    /// Entity Framework Core 2.0. for interaction with a relational database. 
+    /// The database itself is supplied via the TDbContext type parameter.
+    /// </summary>
+    /// <typeparam name="TPersistentData">Type of objects to persist</typeparam>
+    /// <typeparam name="TDbContext">Type for database context, i.e. database specification</typeparam>
+    public class EFCoreSource<TDbContext, TPersistentData> : IDataSourceCRUD<TPersistentData>, IDataSourceLoad<TPersistentData>
+        where TPersistentData : class, IStorable 
+        where TDbContext : DbContext, new()
     {
-        #region Instance fields
-        private DbContext _context;
-        #endregion
-
-        #region Constructor
-        public EFCoreSource(DbContext context)
-        {
-            _context = context;
-        }
-        #endregion
-
         public async Task<List<TPersistentData>> Load()
         {
-            return await _context.Set<TPersistentData>().ToListAsync();
+            using (var context = new TDbContext())
+            {
+                return await context.Set<TPersistentData>().ToListAsync();
+            }
         }
 
         public async Task<int> Create(TPersistentData obj)
         {
-            await _context.Set<TPersistentData>().AddAsync(obj);
-            _context.SaveChanges();
-            return obj.Key; // TODO
+            using (var context = new TDbContext())
+            {
+                await context.Set<TPersistentData>().AddAsync(obj);
+                context.SaveChanges();
+                return obj.Key; // TODO
+            }
         }
 
         public async Task<TPersistentData> Read(int key)
         {
-            return await _context.Set<TPersistentData>().FindAsync(key);
+            using (var context = new TDbContext())
+            {
+                return await context.Set<TPersistentData>().FindAsync(key);
+            }
         }
 
         public async Task Update(int key, TPersistentData obj)
         {
-            TPersistentData oldObj = await _context.Set<TPersistentData>().FindAsync(key);
-            if (oldObj != null)
+            using (var context = new TDbContext())
             {
-                _context.Set<TPersistentData>().Remove(oldObj);
-                obj.Key = key;
-                await _context.Set<TPersistentData>().AddAsync(obj);
-                _context.SaveChanges();
+                TPersistentData oldObj = await context.Set<TPersistentData>().FindAsync(key);
+                if (oldObj != null)
+                {
+                    context.Set<TPersistentData>().Remove(oldObj);
+                    obj.Key = key;
+                    await context.Set<TPersistentData>().AddAsync(obj);
+                    context.SaveChanges();
+                }
             }
         }
 
         public async Task Delete(int key)
         {
-            TPersistentData obj = await _context.Set<TPersistentData>().FindAsync(key);
-            if (obj != null)
+            using (var context = new TDbContext())
             {
-                _context.Set<TPersistentData>().Remove(obj);
-                _context.SaveChanges();
+                TPersistentData obj = await context.Set<TPersistentData>().FindAsync(key);
+                if (obj != null)
+                {
+                    context.Set<TPersistentData>().Remove(obj);
+                    context.SaveChanges();
+                }
             }
         }
     }

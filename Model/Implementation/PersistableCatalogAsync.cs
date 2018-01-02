@@ -8,19 +8,24 @@ using Model.Interfaces;
 namespace Model.Implementation
 {
     /// <summary>
-    /// Implementation of a persistable Catalog.
+    /// Implementation of a persistable Catalog, with 
+    /// asynchronous Load and Save operations.
     /// Note that the implementation inherits from Catalog, 
     /// and thus also contains CRUD methods.
     /// </summary>
-    public abstract class PersistableCatalog<TDomainData, TViewData, TPersistentData>
-        : Catalog<TDomainData, TViewData, TPersistentData>, IPersistableCatalog
+    public abstract class PersistableCatalogAsync<TDomainData, TViewData, TPersistentData>
+        : Catalog<TDomainData, TViewData, TPersistentData>, IPersistableCatalogAsync
           where TViewData : IStorable
           where TDomainData : IStorable
     {
         private IPersistentSource<TPersistentData> _persistentSource;
+        public event Action LoadBegins;
+        public event Action LoadEnds;
+        public event Action SaveBegins;
+        public event Action SaveEnds;
 
         #region Constructor
-        protected PersistableCatalog(
+        protected PersistableCatalogAsync(
             IInMemoryCollection<TDomainData> collection,
             IPersistentSource<TPersistentData> source,
             List<PersistencyOperations> supportedOperations)
@@ -36,13 +41,15 @@ namespace Model.Implementation
         /// Relays call of Load to data source, if the data 
         /// source supports the Load operation
         /// </summary>
-        public async void Load(bool suppressException = true)
+        public async Task LoadAsync(bool suppressException = true)
         {
 
             if (_supportedOperations.Contains(PersistencyOperations.Load))
             {
+                LoadBegins?.Invoke();
                 List<TPersistentData> objects = await _persistentSource.Load();
                 _collection.ReplaceAll(CreateDomainObjects(objects), KeyManagementStrategyType.DataSourceDecides);
+                LoadEnds?.Invoke();
             }
             else
             {
@@ -58,11 +65,13 @@ namespace Model.Implementation
         /// Relays call of Save to data source, if the data 
         /// source supports the Load operation
         /// </summary>
-        public async void Save(bool suppressException = true)
+        public async Task SaveAsync(bool suppressException = true)
         {
             if (_supportedOperations.Contains(PersistencyOperations.Save))
             {
+                SaveBegins?.Invoke();
                 await _persistentSource.Save(CreatePersistentDataObjects(_collection.All));
+                SaveEnds?.Invoke();
             }
             else
             {
