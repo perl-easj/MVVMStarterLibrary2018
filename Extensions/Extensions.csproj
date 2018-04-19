@@ -114,9 +114,7 @@
     <Compile Include="Commands\Interfaces\CRUDStateCommands.cs" />
     <Compile Include="Commands\Interfaces\CRUDStates.cs" />
     <Compile Include="Model\Implementation\EFCorePersistableCatalogAsync.cs" />
-    <Compile Include="Model\Implementation\FilePersistableCatalog.cs" />
     <Compile Include="Model\Implementation\FilePersistableCatalogAsync.cs" />
-    <Compile Include="Model\Implementation\FilePersistableCatalogWithoutTransformation.cs" />
     <Compile Include="Model\Implementation\FilePersistableCatalogWithoutTransformationAsync.cs" />
     <Compile Include="Model\Implementation\RestApiPersistableCatalogAsync.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

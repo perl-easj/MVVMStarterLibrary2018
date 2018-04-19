@@ -10,7 +10,7 @@ namespace ViewModel.Page.Interfaces
     /// at pages containing a Master/Details view of a collection of objects.
     /// </summary>
     /// <typeparam name="TViewData"></typeparam>
-    public interface IPageViewModel<TViewData> : INotifyPropertyChanged
+    public interface IPageViewModel<TViewData> : INotifyPropertyChanged, IItemSelectionChangedEvent<TViewData>
     {
         /// <summary>
         /// Collection of view-oriented objects corresponding to underlying 

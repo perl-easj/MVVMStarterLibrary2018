@@ -5,7 +5,7 @@ using Data.Transformed.Implementation;
 namespace ViewModel.Data.Implementation
 {
     /// <summary>
-    /// Base class for data view model classes. Juts adds INotifyPropertyChanged
+    /// Base class for data view model classes. Just adds INotifyPropertyChanged
     /// functionality to the DataWrapper class.
     /// </summary>
     public class DataViewModelBase<TViewData> : DataWrapper<TViewData>, INotifyPropertyChanged

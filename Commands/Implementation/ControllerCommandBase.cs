@@ -6,15 +6,15 @@ namespace Commands.Implementation
 {
     /// <inheritdoc />
     /// <summary>
-    /// Base class for commands performing CRUD 
-    /// (Create, Read, Update, Delete) operations.
+    /// Base class for any command which operates by
+    /// calling Run on a simple controller.
     /// </summary>
-    public abstract class CRUDCommandBase : INotifiableCommand
+    public abstract class ControllerCommandBase : INotifiableCommand
     {
         protected ISimpleController Controller;
         protected Func<bool> Condition;
 
-        protected CRUDCommandBase(ISimpleController controller, Func<bool> condition)
+        protected ControllerCommandBase(ISimpleController controller, Func<bool> condition)
         {
             Controller = controller;
             Condition = condition;

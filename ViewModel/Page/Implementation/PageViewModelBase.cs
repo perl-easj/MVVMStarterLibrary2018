@@ -15,7 +15,9 @@ namespace ViewModel.Page.Implementation
     /// from which data is retrieved and made available to a view using this view model.
     /// </summary>
     /// <typeparam name="TViewData"></typeparam>
-    public abstract class PageViewModelBase<TViewData> : IDataWrapper<TViewData>, IPageViewModel<TViewData>
+    public abstract class PageViewModelBase<TViewData> : 
+        IDataWrapper<TViewData>, 
+        IPageViewModel<TViewData>
         where TViewData : class, ICopyable, new()
     {
         #region Instance fields

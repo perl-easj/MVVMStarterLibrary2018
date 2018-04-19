@@ -108,7 +108,7 @@
   <ItemGroup>
     <Compile Include="Implementation\CommandManager.cs" />
     <Compile Include="Implementation\CreateCommandBase.cs" />
-    <Compile Include="Implementation\CRUDCommandBase.cs" />
+    <Compile Include="Implementation\ControllerCommandBase.cs" />
     <Compile Include="Implementation\CRUDCommandManager.cs" />
     <Compile Include="Implementation\DeleteCommandBase.cs" />
     <Compile Include="Implementation\RelayCommand.cs" />

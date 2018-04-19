@@ -11,24 +11,69 @@ namespace AddOns.Validation.Implementation
     {
         /// <summary>
         /// Main validation method: If the validation 
-        /// finds errors, a ValidationException is thrown.
+        /// finds errors, the specified action is executed.
         /// </summary>
         /// <typeparam name="TValue">
         /// Type of value subjected to validation
         /// </typeparam>
-        /// <param name="validator">
-        /// Function performing the actual validation
-        /// </param>
         /// <param name="value">
         /// Actual value subjected to validation
         /// </param>
-        public static void ThrowOnInvalid<TValue>(Func<TValue, ValidationOutcome> validator, TValue value)
+        /// <param name="validator">
+        /// Function performing the actual validation
+        /// </param>
+        /// <param name="outcomeHandler">
+        /// Function handling the outcome in case
+        /// the validation found an error
+        /// </param>
+        public static void ValidateValue<TValue>(
+            TValue value,
+            Func<TValue, ValidationOutcome> validator,
+            Action<ValidationOutcome> outcomeHandler)
         {
             ValidationOutcome vo = validator(value);
-            if (!vo.Valid) // Validation found errors
+            if (!vo.Valid)
+            {
+                outcomeHandler(vo);
+            }
+        }
+
+        /// <summary>
+        /// Main validation method with default handling of
+        /// validation outcome: throw VaælidationException.
+        /// </summary>
+        public static void ValidateValue<TValue>(
+            TValue value,
+            Func<TValue, ValidationOutcome> validator)
+        {
+            ValidationOutcome vo = validator(value);
+            if (!vo.Valid)
             {
                 throw new ValidationException(vo.Message);
             }
+        }
+
+        /// <summary>
+        /// Generic validation method
+        /// </summary>
+        /// <typeparam name="TValue">
+        /// Type of value subjected to validation
+        /// </typeparam>
+        /// <param name="value">
+        /// Actual value to validate
+        /// </param>
+        /// <param name="isValid">
+        /// Function performing the actual validation
+        /// </param>
+        /// <param name="message">
+        /// Validation error message
+        /// </param>
+        /// <returns>
+        /// Outcome of validation.
+        /// </returns>
+        private static ValidationOutcome Validate<TValue>(TValue value, Func<TValue, bool> isValid, string message)
+        {
+            return isValid(value) ? new ValidationOutcome() : new ValidationOutcome(message);
         }
 
         /// <summary>
@@ -132,29 +177,6 @@ namespace AddOns.Validation.Implementation
         public static ValidationOutcome ValidateIntInInterval(int value, int minValue, int MaxValue, string message)
         {
             return Validate(value, v => (v >= minValue && v <= MaxValue), message);
-        }
-
-        /// <summary>
-        /// Generic validation method
-        /// </summary>
-        /// <typeparam name="TValue">
-        /// Type of value subjected to validation
-        /// </typeparam>
-        /// <param name="value">
-        /// Actual value to validate
-        /// </param>
-        /// <param name="isValid">
-        /// Function performing the actual validation
-        /// </param>
-        /// <param name="message">
-        /// Validation error message
-        /// </param>
-        /// <returns>
-        /// Outcome of validation.
-        /// </returns>
-        private static ValidationOutcome Validate<TValue>(TValue value, Func<TValue, bool> isValid, string message)
-        {
-            return isValid(value) ? new ValidationOutcome() : new ValidationOutcome(message);
         }
     }
 }

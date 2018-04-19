@@ -144,7 +144,6 @@
     <Compile Include="Security\Interfaces\IUser.cs" />
     <Compile Include="Security\Interfaces\IUserType.cs" />
     <Compile Include="UI\Implementation\DialogWithReturnValue.cs" />
-    <Compile Include="UI\Implementation\UIService.cs" />
     <Compile Include="Validation\Implementation\ValidationException.cs" />
     <Compile Include="Validation\Implementation\ValidationOutcome.cs" />
     <Compile Include="Validation\Implementation\ValidationService.cs" />

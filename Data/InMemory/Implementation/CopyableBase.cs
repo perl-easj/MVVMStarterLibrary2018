@@ -8,13 +8,15 @@ namespace Data.InMemory.Implementation
     /// </summary>
     public abstract class CopyableBase : StorableBase, ICopyable
     {
+        #region Constructors
         protected CopyableBase() : base(NullKey)
         {
         }
 
         protected CopyableBase(int key) : base(key)
         {
-        }
+        } 
+        #endregion
 
         /// <inheritdoc />
         /// <summary>

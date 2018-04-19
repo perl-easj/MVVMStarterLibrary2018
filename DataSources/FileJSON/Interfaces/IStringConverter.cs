@@ -7,12 +7,12 @@ namespace DataSources.FileJSON.Interfaces
     /// and a string representation. This could e.g. be a 
     /// JSON or XML string representation.
     /// </summary>
-    /// <typeparam name="TPersistentData">
+    /// <typeparam name="TData">
     /// Type of objects to convert.
     /// </typeparam>
-    public interface IStringConverter<TPersistentData>
+    public interface IStringConverter<TData>
     {
-        string ConvertToString(List<TPersistentData> objects);
-        List<TPersistentData> ConvertFromString(string data);
+        string ConvertToString(List<TData> objects);
+        List<TData> ConvertFromString(string data);
     }
 }

@@ -9,7 +9,7 @@ namespace Commands.Implementation
     /// <summary>
     /// Implementation of a generic Delete command.
     /// </summary>
-    public class DeleteCommandBase<TViewData> : CRUDCommandBase
+    public class DeleteCommandBase<TViewData> : ControllerCommandBase
         where TViewData : class, ICopyable, IStorable
     {
         public DeleteCommandBase(IDataWrapper<TViewData> source, ICatalog<TViewData> target, Func<bool> condition)

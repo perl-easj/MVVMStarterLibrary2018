@@ -6,7 +6,7 @@
     /// </summary>
     public interface IViewDataTransform<TDomainData, TViewData>
     {
-        TDomainData CreateDomainObjectFromViewDataObject(TViewData vmObj);
+        TDomainData CreateDomainObjectFromViewDataObject(TViewData vdObj);
         TViewData CreateViewDataObject(TDomainData obj);
     }
 }

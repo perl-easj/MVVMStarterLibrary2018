@@ -5,15 +5,15 @@ namespace Data.Transformed.Implementation
     /// <summary>
     /// Base implementation of IDataWrapper
     /// </summary>
-    public class DataWrapper<TTransformedData> : IDataWrapper<TTransformedData>
+    public class DataWrapper<TData> : IDataWrapper<TData>
     {
         /// <inheritdoc />
-        public TTransformedData DataObject { get; }
+        public TData DataObject { get; }
 
         /// <summary>
-        /// Constructor. Sets the wrapped transformed data object
+        /// Constructor. Sets the wrapped data object
         /// </summary>
-        protected DataWrapper(TTransformedData obj)
+        protected DataWrapper(TData obj)
         {
             DataObject = obj;
         }

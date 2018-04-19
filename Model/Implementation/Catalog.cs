@@ -42,20 +42,20 @@ namespace Model.Implementation
         {
             get
             {
-                List<TViewData> transformedAll = new List<TViewData>();
+                List<TViewData> vdAll = new List<TViewData>();
                 foreach (TDomainData obj in _collection.All)
                 {
-                    transformedAll.Add(CreateViewDataObject(obj));
+                    vdAll.Add(CreateViewDataObject(obj));
                 }
-                return transformedAll;
+                return vdAll;
             }
         }
 
         /// <inheritdoc />
-        public void Create(TViewData vmObj, KeyManagementStrategyType keyManagement = KeyManagementStrategyType.CollectionDecides)
+        public void Create(TViewData vdObj, KeyManagementStrategyType keyManagement = KeyManagementStrategyType.CollectionDecides)
         {
             // Create the new domain object (this is where it happens :-)).
-            TDomainData obj = CreateDomainObjectFromViewDataObject(vmObj);
+            TDomainData obj = CreateDomainObjectFromViewDataObject(vdObj);
 
             // Strategy for key selection (DataSource decides)
             // 1) Throw exception if Create operation is not supported,
@@ -115,11 +115,11 @@ namespace Model.Implementation
         }
 
         /// <inheritdoc />
-        public void Update(TViewData obj, int key)
+        public void Update(TViewData vdObj, int key)
         {
             Delete(key);
-            obj.Key = key;
-            Create(obj, KeyManagementStrategyType.CallerDecides);
+            vdObj.Key = key;
+            Create(vdObj, KeyManagementStrategyType.CallerDecides);
         }
 
         /// <inheritdoc />

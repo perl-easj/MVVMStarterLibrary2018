@@ -6,7 +6,7 @@
     /// </summary>
     public interface IPersistentDataTransform<TDomainData, TPersistentData>
     {
-        TDomainData CreateDomainObjectFromPersistentDataObject(TPersistentData vmObj);
+        TDomainData CreateDomainObjectFromPersistentDataObject(TPersistentData pdObj);
         TPersistentData CreatePersistentDataObject(TDomainData obj);
     }
 }

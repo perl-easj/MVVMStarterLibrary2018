@@ -10,16 +10,18 @@ namespace ViewModel.Page.Implementation
     /// Implementation of the IPageViewModelMediator class. Provides template 
     /// strategies for handling changes to catalog and item selection.
     /// </summary>
-    public abstract class PageViewModelMediatorBase<TViewData> : ICatalogMediator, IPageViewModelMediator<TViewData>
+    public abstract class PageViewModelMediatorBase<TViewData> : 
+        ICatalogMediator, 
+        IPageViewModelMediator<TViewData>
         where TViewData : class, ICopyable, new()
     {
         #region Instance fields
-        private PageViewModelBase<TViewData> _pageViewModel;
+        private IPageViewModel<TViewData> _pageViewModel;
         private ICatalog<TViewData> _catalog;
         #endregion
 
         #region Constructor
-        protected PageViewModelMediatorBase(PageViewModelBase<TViewData> pageViewModel, ICatalog<TViewData> catalog)
+        protected PageViewModelMediatorBase(IPageViewModel<TViewData> pageViewModel, ICatalog<TViewData> catalog)
         {
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
             _pageViewModel = pageViewModel ?? throw new ArgumentNullException(nameof(pageViewModel));

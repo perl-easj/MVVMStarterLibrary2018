@@ -9,8 +9,8 @@ namespace DataSources.FileJSON.Implementation
     /// IDataConverter interface. Uses the 
     /// 3rd-party NewtonSoft JSON package.
     /// </summary>
-    /// <typeparam name="TPersistentData">Type of objects to convert</typeparam>
-    public class JSONConverter<TPersistentData> : IStringConverter<TPersistentData>
+    /// <typeparam name="TData">Type of objects to convert</typeparam>
+    public class JSONConverter<TData> : IStringConverter<TData>
     {
         /// <summary>
         /// Convert a List of objects into a JSON string.
@@ -21,7 +21,7 @@ namespace DataSources.FileJSON.Implementation
         /// <returns>
         /// Data on JSON string format.
         /// </returns>
-        public string ConvertToString(List<TPersistentData> objects)
+        public string ConvertToString(List<TData> objects)
         {
             return JsonConvert.SerializeObject(objects);
         }
@@ -35,9 +35,9 @@ namespace DataSources.FileJSON.Implementation
         /// <returns>
         /// List of objects.
         /// </returns>
-        public List<TPersistentData> ConvertFromString(string data)
+        public List<TData> ConvertFromString(string data)
         {
-            return (data == null ? new List<TPersistentData>() : (List<TPersistentData>)JsonConvert.DeserializeObject(data, typeof(List<TPersistentData>)));
+            return (data == null ? new List<TData>() : (List<TData>)JsonConvert.DeserializeObject(data, typeof(List<TData>)));
         }
     }
 }

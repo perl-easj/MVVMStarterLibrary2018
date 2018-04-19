@@ -4,11 +4,11 @@
     /// Interface for objects which "wrap" a data-carrying object.
     /// This will typically be a transformed domain object.
     /// </summary>
-    public interface IDataWrapper<out TTransformedData>
+    public interface IDataWrapper<out TData>
     {
         /// <summary>
-        /// Returns the wrapped transformed domain object.
+        /// Returns the wrapped data object.
         /// </summary>
-        TTransformedData DataObject { get; }
+        TData DataObject { get; }
     }
 }
